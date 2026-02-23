@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://theopinard.github.io/about-me/sitemap-index.xml

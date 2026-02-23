@@ -1,0 +1,96 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  canonicalURL?: string;
+}
+
+const {
+  title,
+  description = 'Theodore Meynard — ML Engineering Manager based in Berlin.',
+  keywords,
+  canonicalURL = Astro.url.href,
+} = Astro.props;
+
+const siteName = 'Theodore Meynard';
+// Normalize: strip trailing slash so we can always write `${base}/path`
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const navLinks = [
+  { href: `${base}/`, label: 'About' },
+  { href: `${base}/blog`, label: 'Blog' },
+  { href: `${base}/talks`, label: 'Talks' },
+  { href: `${base}/conferences`, label: 'Conferences' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title} · {siteName}</title>
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} · ${siteName}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={siteName} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={`${title} · ${siteName}`} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="sitemap" href={`${base}/sitemap-index.xml`} />
+
+
+  </head>
+  <body>
+    <header>
+      <nav class="nav">
+        <div class="nav-inner">
+          <a class="nav-brand" href={`${base}/`}>TM</a>
+          <ul class="nav-links">
+            {navLinks.map(({ href, label }) => (
+              <li>
+                <a
+                  href={href}
+                  class={currentPath === href || (href !== `${base}/` && currentPath.startsWith(href)) ? 'active' : ''}
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>© {new Date().getFullYear()} Theodore Meynard</span>
+        <div class="footer-links">
+          <a href="https://github.com/theopinard" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/theodore-meynard" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

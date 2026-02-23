@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title="Blog"
+  description="Articles and posts by Theodore Meynard on machine learning, engineering leadership, and data science."
+>
+  <div class="container">
+    <div class="page-header">
+      <h1>Blog</h1>
+      <p>Writing on machine learning, engineering, and data science.</p>
+    </div>
+
+    <div class="cards">
+      {posts.map((post) => (
+        <article class="card">
+          <h3>
+            <a href={post.data.url} target="_blank" rel="noopener noreferrer">
+              {post.data.title}
+            </a>
+          </h3>
+          <div class="meta">
+            <span>{post.data.publisher}</span>
+            <span>{formatDate(post.data.date)}</span>
+          </div>
+          <p>{post.data.summary}</p>
+          <div class="card-links">
+            <a class="card-link" href={post.data.url} target="_blank" rel="noopener noreferrer">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Read post
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
