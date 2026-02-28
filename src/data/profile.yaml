@@ -23,40 +23,44 @@ bio: >
 
 work:
   - company: GetYourGuide
+    url: https://www.linkedin.com/company/getyourguide-ag/
     role: Data Science & MLOps Engineering Manager
     period: Feb 2023 – Present
     description: >
-      Lead a team of Data Scientists and MLOps Engineers building ranking and search systems
+      Lead a team of Data Scientists and MLOps Engineers building **ranking and search systems**
       for marketplace discovery. Use classical ML, deep learning, and LLMs to improve user experience.
       Own technical strategy, hiring, performance, and roadmap. Led the evolution of the ranking system
-      from static scoring to gradient boosted trees and ultimately deep learning models,
+      from static scoring to gradient boosted trees and ultimately **deep learning models**,
       driving significant business impact.
 
   - company: GetYourGuide
+    url: https://www.linkedin.com/company/getyourguide-ag/
     role: Senior / Staff Data Scientist
     period: Aug 2020 – Feb 2023
     description: >
-      Owned end-to-end ranking and recommendation models: training new
+      Owned end-to-end **ranking and recommendation models**: training new
       iterations, running live A/B experiments, and analysing results to guide
-      product decisions. Built and scaled the internal ML platform to introduce
+      product decisions. Built and scaled the internal **ML platform** to introduce
       CI/CD, testing standards, and reproducible training/deployment workflows.
       Co-led the Data Engineering guild to coordinate cross-team technical initiatives.
 
-  - company: plista
+  - company: plista (WPP)
+    url: https://www.linkedin.com/company/groupm-plista/
     role: Machine Learning Engineer
     period: Oct 2018 – Jun 2020
     description: >
-      Improved article recommendation performance by ~20% using gradient
+      Improved article recommendation performance by **~20%** using gradient
       boosted models (XGBoost). Deployed BERT-based semantic feature extraction
       pipelines (Python, Scala, Spark). Migrated the recommendation stack to AWS
       using Terraform. Organised monthly ML paper readings to foster technical
       knowledge sharing across engineering teams.
 
   - company: optilyz
+    url: https://www.linkedin.com/company/optilyz/
     role: Data Scientist
     period: Sep 2017 – Oct 2018
     description: >
-      Owned the full data science lifecycle for direct mail marketing optimisation.
+      Owned the full data science lifecycle for **direct mail marketing optimisation**.
       Built fraud detection and data cleansing systems (Python, MongoDB, AWS),
       implemented campaign targeting models, and created a GDPR-compliant data lake.
 

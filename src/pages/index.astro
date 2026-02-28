@@ -2,8 +2,16 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadYaml } from '../utils/loadData';
 
+// Converts **bold** and [text](url) to HTML. Safe: no user-controlled input.
+function inlineMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+}
+
 interface WorkEntry {
   company: string;
+  url?: string;
   role: string;
   period: string;
   description: string;
@@ -77,8 +85,12 @@ const profile = loadYaml<Profile>('profile.yaml');
             <div class="timeline-period">{job.period}</div>
             <div class="timeline-content">
               <h3>{job.role}</h3>
-              <p class="company">{job.company}</p>
-              <p>{job.description}</p>
+              <p class="company">
+                {job.url
+                  ? <a href={job.url} target="_blank" rel="noopener">{job.company}</a>
+                  : job.company}
+              </p>
+              <p set:html={inlineMarkdown(job.description)} />
             </div>
           </div>
         ))}
