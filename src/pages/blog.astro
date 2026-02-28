@@ -27,7 +27,7 @@ function formatDate(date: Date): string {
 
     <div class="cards">
       {posts.map((post) => (
-        <article class="card">
+        <article id={post.id.replace(/(?:\.md)+$/, '')} class="card">
           <h3>
             <a href={post.data.url} target="_blank" rel="noopener noreferrer">
               {post.data.title}

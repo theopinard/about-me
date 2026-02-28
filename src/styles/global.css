@@ -357,6 +357,12 @@ a:hover {
   transform: translateY(-1px);
 }
 
+.card:target {
+  border-left: 3px solid var(--accent);
+  background: var(--accent-light);
+  scroll-margin-top: 1rem;
+}
+
 .card h3 {
   font-size: 1rem;
   font-weight: 600;

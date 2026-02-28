@@ -19,7 +19,7 @@ bio: >
   **Data Science & MLOps Engineering Manager** at GetYourGuide with a passion for building high-impact
   machine learning systems and the teams that create them. I bridge the gap between
   **research and production** by turning ideas into reliable, scalable data and ML products.
-  I am also active in the Berlin data community as a PyData organiser and conference speaker.
+  I am also active in the Berlin data community as an [organizer](@community) and [conference speaker](@talks).
 
 work:
   - company: GetYourGuide
@@ -30,7 +30,8 @@ work:
       Lead a team of Data Scientists and MLOps Engineers building **ranking and search systems**
       for marketplace discovery. Use classical ML, Deep Learning, and LLMs to improve user experience.
       Own technical strategy, hiring, performance, and roadmap. Led the evolution of the ranking system
-      from static scoring to gradient boosted trees and ultimately **deep learning models**,
+      from static scoring to gradient boosted trees ([link](@blog:2023-from-batch-to-real-time-the-incremental-mlops-journey-at-getyourguide))
+      and ultimately deep learning models ([link](@blog:2025-from-trees-to-transformers)),
       driving significant business impact.
 
   - company: GetYourGuide
@@ -41,7 +42,9 @@ work:
       Owned end-to-end **ranking and recommendation models**: training new
       iterations, running live A/B experiments, and analysing results to guide
       product decisions. Built and scaled the internal **ML platform** to introduce
-      CI/CD, testing standards, and reproducible training/deployment workflows.
+      CI/CD, testing standards, and reproducible training/deployment workflows
+      (see [part 1](@blog:2021-laying-the-foundation-of-our-open-source-ml-platform-with-a-modern-ci-cd-pipeline)
+      & [part 2](@blog:2022-how-we-extended-our-open-source-ml-platform-to-support-real-time-inference)).
       Co-led the Data Engineering guild to coordinate cross-team technical initiatives.
 
   - company: plista (WPP)
@@ -60,16 +63,16 @@ work:
     role: Data Scientist
     period: Sep 2017 – Oct 2018
     description: >
-      Owned the full data science lifecycle for **direct mail marketing optimisation**.
+      Owned the full data science lifecycle for direct mail marketing optimisation
       Built fraud detection and data cleansing systems (Python, MongoDB, AWS),
       implemented campaign targeting models, and created a GDPR-compliant data lake.
 
 education:
   - institution: University of São Paulo
-    degree: Engineer's Degree — Aeronautics Engineering
+    degree: Engineer's Degree — Aeronautics Engineering (Double Degree)
     year: 2017
     note: >
-      "Double degree programme (2015-2017). Master thesis in image processing and computer vision: measuring flexible wing displacement using camera-based post-processing. Focused on experimental validation, numerical simulation, and data-driven modelling. Conducted one-year research project on aerodynamic instability using Direct Numerical Simulation (Fortran, Matlab); published at [EPTT 2016 conference](http://www.sistema.abcm.org.br/articleFiles/download/1088) (São José dos Campos, Brazil)."
+      Master thesis in image processing and computer vision: measuring flexible wing displacement using camera-based post-processing. Focused on experimental validation, numerical simulation, and data-driven modelling. Conducted one-year research project on aerodynamic instability using Direct Numerical Simulation (Fortran, Matlab); published at [EPTT 2016 conference](http://www.sistema.abcm.org.br/articleFiles/download/1088) (São José dos Campos, Brazil).
 
   - institution: École Centrale Paris
     degree: Master of Engineering (M.Eng.)
