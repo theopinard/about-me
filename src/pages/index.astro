@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadYaml } from '../utils/loadData';
 
-// Converts **bold** and [text](url) to HTML. Safe: no user-controlled input.
 function inlineMarkdown(text: string): string {
   return text
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
@@ -60,7 +59,7 @@ const profile = loadYaml<Profile>('profile.yaml');
         <div>
           <h1>{profile.name}</h1>
           <p class="subtitle">{profile.title} · {profile.location}</p>
-          <p class="bio">{profile.bio}</p>
+          <p class="bio" set:html={inlineMarkdown(profile.bio)} />
         </div>
         <img class="hero-photo" src="/about-me/MeynardTheodore.jpg" alt="Theodore Meynard" />
       </div>
@@ -106,7 +105,7 @@ const profile = loadYaml<Profile>('profile.yaml');
           <div class="edu-content">
             <h3>{edu.degree}</h3>
             <p>{edu.institution}</p>
-            {edu.note && <p>{edu.note}</p>}
+            {edu.note && <p set:html={inlineMarkdown(edu.note)} />}
           </div>
         </div>
       ))}
@@ -119,25 +118,25 @@ const profile = loadYaml<Profile>('profile.yaml');
         <div class="skill-group">
           <h3>Languages</h3>
           <ul>
-            {profile.skills.languages.map((s) => <li>{s}</li>)}
+            {profile.skills.languages.map((s) => <li set:html={inlineMarkdown(s)} />)}
           </ul>
         </div>
         <div class="skill-group">
           <h3>Frameworks</h3>
           <ul>
-            {profile.skills.frameworks.map((s) => <li>{s}</li>)}
+            {profile.skills.frameworks.map((s) => <li set:html={inlineMarkdown(s)} />)}
           </ul>
         </div>
         <div class="skill-group">
           <h3>Platforms</h3>
           <ul>
-            {profile.skills.platforms.map((s) => <li>{s}</li>)}
+            {profile.skills.platforms.map((s) => <li set:html={inlineMarkdown(s)} />)}
           </ul>
         </div>
         <div class="skill-group">
           <h3>Practices</h3>
           <ul>
-            {profile.skills.practices.map((s) => <li>{s}</li>)}
+            {profile.skills.practices.map((s) => <li set:html={inlineMarkdown(s)} />)}
           </ul>
         </div>
       </div>

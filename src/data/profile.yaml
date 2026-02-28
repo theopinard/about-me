@@ -16,9 +16,9 @@ expertise_tags:
   - "Data Engineering"
 
 bio: >
-  Data Science & MLOps Engineering Manager at GetYourGuide with a passion for building high-impact
+  **Data Science & MLOps Engineering Manager** at GetYourGuide with a passion for building high-impact
   machine learning systems and the teams that create them. I bridge the gap between
-  research and production by turning ideas into reliable, scalable data and ML products.
+  **research and production** by turning ideas into reliable, scalable data and ML products.
   I am also active in the Berlin data community as a PyData organiser and conference speaker.
 
 work:
@@ -28,7 +28,7 @@ work:
     period: Feb 2023 – Present
     description: >
       Lead a team of Data Scientists and MLOps Engineers building **ranking and search systems**
-      for marketplace discovery. Use classical ML, deep learning, and LLMs to improve user experience.
+      for marketplace discovery. Use classical ML, Deep Learning, and LLMs to improve user experience.
       Own technical strategy, hiring, performance, and roadmap. Led the evolution of the ranking system
       from static scoring to gradient boosted trees and ultimately **deep learning models**,
       driving significant business impact.
@@ -68,7 +68,8 @@ education:
   - institution: University of São Paulo
     degree: Engineer's Degree — Aeronautics Engineering
     year: 2017
-    note: "Double degree programme (2015-2017). Master thesis in image processing and computer vision: measuring flexible wing displacement using camera-based post-processing. Focused on experimental validation, numerical simulation, and data-driven modelling. Conducted one-year research project on aerodynamic instability using Direct Numerical Simulation (Fortran, Matlab); published at EPTT 2016 conference (São José dos Campos, Brazil)."
+    note: >
+      "Double degree programme (2015-2017). Master thesis in image processing and computer vision: measuring flexible wing displacement using camera-based post-processing. Focused on experimental validation, numerical simulation, and data-driven modelling. Conducted one-year research project on aerodynamic instability using Direct Numerical Simulation (Fortran, Matlab); published at [EPTT 2016 conference](http://www.sistema.abcm.org.br/articleFiles/download/1088) (São José dos Campos, Brazil)."
 
   - institution: École Centrale Paris
     degree: Master of Engineering (M.Eng.)
@@ -78,7 +79,7 @@ education:
   - institution: Cornell University
     degree: Research Internship — Fluid Dynamics & Computational Modelling
     year: 2014
-    note: Research at the Fluid Dynamics Research Laboratories on unsteady propulsion from flexible membranes. Designed experiments, implemented data acquisition pipelines in Python, and performed quantitative analysis of complex physical systems.
+    note: Research at the Fluid Dynamics Research Laboratories on unsteady propulsion from flexible membranes. Designed experiments, implemented data acquisition pipelines in Python, and performed quantitative analysis of complex physical systems under the supervision from [Riley Shutt](https://www.linkedin.com/in/rileyschutt/).
 
   - institution: Lycée Pierre de Fermat (Toulouse)
     degree: Classe Préparatoire — Advanced Mathematics & Physics
@@ -98,7 +99,7 @@ skills:
     - PySpark
     - Pytorch
     - scikit-learn
-    - fastAPI
+    - FastAPI
   platforms:
     - AWS
     - Databricks
