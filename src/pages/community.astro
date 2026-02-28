@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadYaml } from '../utils/loadData';
+
+interface Conference {
+  name: string;
+  url: string;
+  role: string;
+}
+
+const conferences = loadYaml<Conference[]>('conferences.yaml');
+---
+
+<BaseLayout
+  title="Community"
+  description="Community involvement by Theodore Meynard — meetup organisation and conferences in the data science community."
+>
+  <div class="container">
+    <div class="page-header">
+      <h1>Community</h1>
+      <p>Meetups and events I have helped organise.</p>
+    </div>
+
+    <div class="conf-list">
+      {conferences.map((conf) => (
+        <div class="conf-item">
+          <a href={conf.url} target="_blank" rel="noopener noreferrer">
+            {conf.name}
+          </a>
+          <span class="conf-role">{conf.role}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

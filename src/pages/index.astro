@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 import { loadYaml } from '../utils/loadData';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -50,6 +51,39 @@ interface Profile {
 }
 
 const profile = loadYaml<Profile>('profile.yaml');
+
+// Build-time validation: every [text](@ref) in profile text fields must be a known internal reference.
+// Valid forms: @blog:<slug>  |  @talks  |  @community
+const blogPosts = await getCollection('blog');
+const validBlogIds = new Set(blogPosts.map((p) => p.id.replace(/(?:\.md)+$/, '')));
+const VALID_PAGE_REFS = new Set(['@talks', '@community']);
+
+function assertInternalRefs(text: string, context: string): void {
+  for (const [, , ref] of text.matchAll(/\[([^\]]+)\]\((@[^)]+)\)/g)) {
+    if (ref.startsWith('@blog:')) {
+      const slug = ref.slice('@blog:'.length);
+      if (!validBlogIds.has(slug)) {
+        throw new Error(
+          `[profile.yaml] Unknown @blog slug "${slug}" in ${context}.\n` +
+          `Valid slugs: ${[...validBlogIds].sort().join(', ')}`
+        );
+      }
+    } else if (!VALID_PAGE_REFS.has(ref)) {
+      throw new Error(
+        `[profile.yaml] Unknown internal reference "${ref}" in ${context}.\n` +
+        `Valid references: @blog:<slug>, ${[...VALID_PAGE_REFS].sort().join(', ')}`
+      );
+    }
+  }
+}
+
+assertInternalRefs(profile.bio, 'bio');
+for (const job of profile.work) {
+  assertInternalRefs(job.description, `work › ${job.company} (${job.role})`);
+}
+for (const edu of profile.education) {
+  if (edu.note) assertInternalRefs(edu.note, `education › ${edu.institution}`);
+}
 ---
 
 <BaseLayout
