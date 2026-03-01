@@ -1,9 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 import { loadYaml } from '../utils/loadData';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+function inlineMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\(@blog:([^)]+)\)/g, `<a href="${base}/blog#$2">$1</a>`)
+    .replace(/\[([^\]]+)\]\(@community\)/g, `<a href="${base}/community">$1</a>`)
+    .replace(/\[([^\]]+)\]\(@talks\)/g, `<a href="${base}/talks">$1</a>`)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+}
 
 interface WorkEntry {
   company: string;
+  url?: string;
   role: string;
   period: string;
   description: string;
@@ -38,6 +51,39 @@ interface Profile {
 }
 
 const profile = loadYaml<Profile>('profile.yaml');
+
+// Build-time validation: every [text](@ref) in profile text fields must be a known internal reference.
+// Valid forms: @blog:<slug>  |  @talks  |  @community
+const blogPosts = await getCollection('blog');
+const validBlogIds = new Set(blogPosts.map((p) => p.id.replace(/(?:\.md)+$/, '')));
+const VALID_PAGE_REFS = new Set(['@talks', '@community']);
+
+function assertInternalRefs(text: string, context: string): void {
+  for (const [, , ref] of text.matchAll(/\[([^\]]+)\]\((@[^)]+)\)/g)) {
+    if (ref.startsWith('@blog:')) {
+      const slug = ref.slice('@blog:'.length);
+      if (!validBlogIds.has(slug)) {
+        throw new Error(
+          `[profile.yaml] Unknown @blog slug "${slug}" in ${context}.\n` +
+          `Valid slugs: ${[...validBlogIds].sort().join(', ')}`
+        );
+      }
+    } else if (!VALID_PAGE_REFS.has(ref)) {
+      throw new Error(
+        `[profile.yaml] Unknown internal reference "${ref}" in ${context}.\n` +
+        `Valid references: @blog:<slug>, ${[...VALID_PAGE_REFS].sort().join(', ')}`
+      );
+    }
+  }
+}
+
+assertInternalRefs(profile.bio, 'bio');
+for (const job of profile.work) {
+  assertInternalRefs(job.description, `work › ${job.company} (${job.role})`);
+}
+for (const edu of profile.education) {
+  if (edu.note) assertInternalRefs(edu.note, `education › ${edu.institution}`);
+}
 ---
 
 <BaseLayout
@@ -52,7 +98,7 @@ const profile = loadYaml<Profile>('profile.yaml');
         <div>
           <h1>{profile.name}</h1>
           <p class="subtitle">{profile.title} · {profile.location}</p>
-          <p class="bio">{profile.bio}</p>
+          <p class="bio" set:html={inlineMarkdown(profile.bio)} />
         </div>
         <img class="hero-photo" src="/about-me/MeynardTheodore.jpg" alt="Theodore Meynard" />
       </div>
@@ -77,8 +123,12 @@ const profile = loadYaml<Profile>('profile.yaml');
             <div class="timeline-period">{job.period}</div>
             <div class="timeline-content">
               <h3>{job.role}</h3>
-              <p class="company">{job.company}</p>
-              <p>{job.description}</p>
+              <p class="company">
+                {job.url
+                  ? <a href={job.url} target="_blank" rel="noopener">{job.company}</a>
+                  : job.company}
+              </p>
+              <p set:html={inlineMarkdown(job.description)} />
             </div>
           </div>
         ))}
@@ -94,7 +144,7 @@ const profile = loadYaml<Profile>('profile.yaml');
           <div class="edu-content">
             <h3>{edu.degree}</h3>
             <p>{edu.institution}</p>
-            {edu.note && <p>{edu.note}</p>}
+            {edu.note && <p set:html={inlineMarkdown(edu.note)} />}
           </div>
         </div>
       ))}
@@ -107,25 +157,25 @@ const profile = loadYaml<Profile>('profile.yaml');
         <div class="skill-group">
           <h3>Languages</h3>
           <ul>
-            {profile.skills.languages.map((s) => <li>{s}</li>)}
+            {profile.skills.languages.map((s) => <li set:html={inlineMarkdown(s)} />)}
           </ul>
         </div>
         <div class="skill-group">
           <h3>Frameworks</h3>
           <ul>
-            {profile.skills.frameworks.map((s) => <li>{s}</li>)}
+            {profile.skills.frameworks.map((s) => <li set:html={inlineMarkdown(s)} />)}
           </ul>
         </div>
         <div class="skill-group">
           <h3>Platforms</h3>
           <ul>
-            {profile.skills.platforms.map((s) => <li>{s}</li>)}
+            {profile.skills.platforms.map((s) => <li set:html={inlineMarkdown(s)} />)}
           </ul>
         </div>
         <div class="skill-group">
           <h3>Practices</h3>
           <ul>
-            {profile.skills.practices.map((s) => <li>{s}</li>)}
+            {profile.skills.practices.map((s) => <li set:html={inlineMarkdown(s)} />)}
           </ul>
         </div>
       </div>
