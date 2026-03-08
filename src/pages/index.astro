@@ -19,6 +19,7 @@ interface WorkEntry {
   url?: string;
   role: string;
   period: string;
+  country?: string;
   description: string;
 }
 
@@ -26,6 +27,7 @@ interface EducationEntry {
   institution: string;
   degree: string;
   year: number;
+  country?: string;
   note?: string;
 }
 
@@ -100,7 +102,7 @@ for (const edu of profile.education) {
           <p class="subtitle">{profile.title} · {profile.location}</p>
           <p class="bio" set:html={inlineMarkdown(profile.bio)} />
         </div>
-        <img class="hero-photo" src="/about-me/MeynardTheodore.jpg" alt="Theodore Meynard" />
+        <img class="hero-photo" src="/about-me/MeynardTheodore.jpg" alt="Photo of Theodore Meynard" />
       </div>
       <div class="contact-strip">
         <a href={`https://github.com/${profile.github}`} target="_blank" rel="noopener">
@@ -127,6 +129,7 @@ for (const edu of profile.education) {
                 {job.url
                   ? <a href={job.url} target="_blank" rel="noopener">{job.company}</a>
                   : job.company}
+                {job.country && <span class="location">{job.country}</span>}
               </p>
               <p set:html={inlineMarkdown(job.description)} />
             </div>
@@ -143,7 +146,7 @@ for (const edu of profile.education) {
           <div class="edu-year">{edu.year}</div>
           <div class="edu-content">
             <h3>{edu.degree}</h3>
-            <p>{edu.institution}</p>
+            <p>{edu.institution}{edu.country && <span class="location">{edu.country}</span>}</p>
             {edu.note && <p set:html={inlineMarkdown(edu.note)} />}
           </div>
         </div>
