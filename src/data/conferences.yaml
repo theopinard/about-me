@@ -1,3 +1,7 @@
+- name: Pydata Berlin meetup (2020 - present)
+  url: "https://www.meetup.com/pydata-berlin/"
+  role: Organiser
+
 - name: PyData Berlin 2025
   url: "https://pydata.org/berlin2025/"
   role: Organiser (steering committee)
@@ -14,6 +18,3 @@
   url: "https://2022.pycon.de/"
   role: Organiser (communication committee)
 
-- name: Pydata Berlin meetup (2020 - present)
-  url: "https://www.meetup.com/pydata-berlin/"
-  role: Organiser

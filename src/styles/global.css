@@ -458,6 +458,16 @@ a:hover {
   color: var(--accent);
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .conf-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
 }
 
 /* ============================================================
