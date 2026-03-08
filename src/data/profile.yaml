@@ -26,6 +26,7 @@ work:
     url: https://www.linkedin.com/company/getyourguide-ag/
     role: Data Science & MLOps Engineering Manager
     period: Feb 2023 – Present
+    country: Germany
     description: >
       Lead a team of Data Scientists and MLOps Engineers building **ranking and search systems**
       for marketplace discovery. Use classical ML, Deep Learning, and LLMs to improve user experience.
@@ -38,6 +39,7 @@ work:
     url: https://www.linkedin.com/company/getyourguide-ag/
     role: Senior / Staff Data Scientist
     period: Aug 2020 – Feb 2023
+    country: Germany
     description: >
       Owned end-to-end **ranking and recommendation models**: training new
       iterations, running live A/B experiments, and analysing results to guide
@@ -51,6 +53,7 @@ work:
     url: https://www.linkedin.com/company/groupm-plista/
     role: Machine Learning Engineer
     period: Oct 2018 – Jun 2020
+    country: Germany
     description: >
       Improved article recommendation performance by **~20%** using gradient
       boosted models (XGBoost). Deployed BERT-based semantic feature extraction
@@ -62,6 +65,7 @@ work:
     url: https://www.linkedin.com/company/optilyz/
     role: Data Scientist
     period: Sep 2017 – Oct 2018
+    country: Germany
     description: >
       Owned the full data science lifecycle for direct mail marketing optimisation
       Built fraud detection and data cleansing systems (Python, MongoDB, AWS),
@@ -71,27 +75,32 @@ education:
   - institution: University of São Paulo
     degree: Engineer's Degree — Aeronautics Engineering (Double Degree)
     year: 2017
+    country: Brazil
     note: >
       Master thesis in image processing and computer vision: measuring flexible wing displacement using camera-based post-processing. Focused on experimental validation, numerical simulation, and data-driven modelling. Conducted one-year research project on aerodynamic instability using Direct Numerical Simulation (Fortran, Matlab); published at [EPTT 2016 conference](http://www.sistema.abcm.org.br/articleFiles/download/1088) (São José dos Campos, Brazil).
 
   - institution: École Centrale Paris
     degree: Master of Engineering (M.Eng.)
     year: 2017
+    country: France
     note: French Grande École engineering programme (2012-2017) with strong foundation in applied mathematics, statistical modelling, optimisation, and computational physics. Teaching Assistant of Mathematics for first year Students.
 
   - institution: Cornell University
     degree: Research Internship — Fluid Dynamics & Computational Modelling
     year: 2014
+    country: USA
     note: Research at the Fluid Dynamics Research Laboratories on unsteady propulsion from flexible membranes. Designed experiments, implemented data acquisition pipelines in Python, and performed quantitative analysis of complex physical systems under the supervision from [Riley Shutt](https://www.linkedin.com/in/rileyschutt/).
 
-  - institution: Lycée Pierre de Fermat (Toulouse)
+  - institution: Lycée Pierre de Fermat
     degree: Classe Préparatoire — Advanced Mathematics & Physics
     year: 2012
+    country: France
     note: Intensive two-year programme preparing for French Grandes Écoles, focused on advanced mathematics, problem solving, and theoretical physics.
 
   - institution: Lycée Gustave Eiffel
     degree: Baccalauréat Scientifique (S)
     year: 2010
+    country: France
 
 skills:
   languages:

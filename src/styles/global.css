@@ -83,6 +83,20 @@ a:hover {
   height: 56px;
 }
 
+@media (max-width: 480px) {
+  .nav-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 0.6rem 1.25rem;
+    gap: 0.4rem;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+}
+
 .nav-brand {
   font-weight: 700;
   font-size: 1rem;
@@ -293,6 +307,16 @@ a:hover {
   font-weight: 600;
 }
 
+.location {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-left: 0.4rem;
+}
+
+.location::before {
+  content: "· ";
+}
+
 .timeline-content .company {
   font-size: 0.875rem;
   color: var(--accent);
@@ -458,6 +482,16 @@ a:hover {
   color: var(--accent);
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .conf-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
 }
 
 /* ============================================================
