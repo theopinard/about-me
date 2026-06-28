@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { loadYaml } from '../utils/loadData';
+import { getEntry } from 'astro:content';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const assetBase = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const assetUrl = (path: string) => `${assetBase}${path.replace(/^\/+/, '')}`;
 
 function inlineMarkdown(text: string): string {
   return text
@@ -14,48 +17,27 @@ function inlineMarkdown(text: string): string {
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
 }
 
-interface WorkEntry {
-  company: string;
-  url?: string;
-  role: string;
-  period: string;
-  country?: string;
-  description?: string;
-  highlights?: string[];
+const home = await getEntry('site', 'home');
+const blog = await getEntry('site', 'blog');
+const talksPage = await getEntry('site', 'talks');
+
+if (!home || home.data.kind !== 'home') {
+  throw new Error('Missing site content: src/content/site/home.md');
 }
 
-interface EducationEntry {
-  institution: string;
-  degree: string;
-  year: number;
-  country?: string;
-  note?: string;
+if (!blog || blog.data.kind !== 'blog') {
+  throw new Error('Missing site content: src/content/site/blog.md');
 }
 
-type SkillGroups = Record<string, string[]>;
-
-interface Profile {
-  name: string;
-  title: string;
-  location: string;
-  github: string;
-  linkedin: string;
-  keywords?: string;
-  expertise_tags?: string[];
-  bio: string;
-  community_summary?: string;
-  selected_talks?: string[];
-  work: WorkEntry[];
-  education: EducationEntry[];
-  skills: SkillGroups;
+if (!talksPage || talksPage.data.kind !== 'talks') {
+  throw new Error('Missing site content: src/content/site/talks.md');
 }
 
-const profile = loadYaml<Profile>('profile.yaml');
+const profile = home.data;
 
 // Build-time validation: every [text](@ref) in profile text fields must be a known internal reference.
 // Valid forms: @blog:<slug>  |  @talks  |  @community
-const blogPosts = await getCollection('blog');
-const validBlogIds = new Set(blogPosts.map((p) => p.id.replace(/(?:\.md)+$/, '')));
+const validBlogIds = new Set(blog.data.posts.map((post) => post.id));
 const VALID_PAGE_REFS = new Set(['@talks', '@community']);
 
 function assertInternalRefs(text: string, context: string): void {
@@ -64,13 +46,13 @@ function assertInternalRefs(text: string, context: string): void {
       const slug = ref.slice('@blog:'.length);
       if (!validBlogIds.has(slug)) {
         throw new Error(
-          `[profile.yaml] Unknown @blog slug "${slug}" in ${context}.\n` +
+          `[home.md] Unknown @blog slug "${slug}" in ${context}.\n` +
           `Valid slugs: ${[...validBlogIds].sort().join(', ')}`
         );
       }
     } else if (!VALID_PAGE_REFS.has(ref)) {
       throw new Error(
-        `[profile.yaml] Unknown internal reference "${ref}" in ${context}.\n` +
+        `[home.md] Unknown internal reference "${ref}" in ${context}.\n` +
         `Valid references: @blog:<slug>, ${[...VALID_PAGE_REFS].sort().join(', ')}`
       );
     }
@@ -89,11 +71,18 @@ for (const edu of profile.education) {
   if (edu.note) assertInternalRefs(edu.note, `education › ${edu.institution}`);
 }
 
-const talks = await getCollection('talks');
-const talksById = new Map(talks.map((talk) => [talk.id.replace(/(?:\.md)+$/, ''), talk]));
+const talksById = new Map(talksPage.data.talks.map((talk) => [talk.id, talk]));
 const selectedTalks = (profile.selected_talks ?? [])
-  .map((id) => talksById.get(id))
-  .filter((talk): talk is NonNullable<typeof talk> => Boolean(talk));
+  .map((id) => {
+    const talk = talksById.get(id);
+    if (!talk) {
+      throw new Error(
+        `[home.md] Unknown selected talk "${id}".\n` +
+        `Valid talk ids: ${[...talksById.keys()].sort().join(', ')}`
+      );
+    }
+    return talk;
+  });
 ---
 
 <BaseLayout
@@ -115,7 +104,7 @@ const selectedTalks = (profile.selected_talks ?? [])
             </div>
           )}
         </div>
-        <img class="hero-photo" src="/about-me/MeynardTheodore.jpg" alt="Photo of Theodore Meynard" />
+        <img class="hero-photo" src={assetUrl(profile.photo)} alt={profile.photoAlt} />
       </div>
       <div class="contact-strip">
         <a href={`https://github.com/${profile.github}`} target="_blank" rel="noopener">
@@ -165,13 +154,13 @@ const selectedTalks = (profile.selected_talks ?? [])
         </div>
         <div class="cards compact-cards">
           {selectedTalks.map((talk) => (
-            <article class="card" id={talk.id.replace(/(?:\.md)+$/, '')}>
-              <h3><a href={`${base}/talks#${talk.id.replace(/(?:\.md)+$/, '')}`}>{talk.data.title}</a></h3>
+            <article class="card" id={talk.id}>
+              <h3><a href={`${base}/talks#${talk.id}`}>{talk.title}</a></h3>
               <div class="meta">
-                <span>{talk.data.event}</span>
-                <span>{talk.data.year}</span>
+                <span>{talk.event}</span>
+                <span>{talk.year}</span>
               </div>
-              {talk.data.description && <p>{talk.data.description}</p>}
+              {talk.description && <p>{talk.description}</p>}
             </article>
           ))}
         </div>

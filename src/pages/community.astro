@@ -1,23 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEntry } from 'astro:content';
-import { loadYaml } from '../utils/loadData';
 
-interface Conference {
-  name: string;
-  url: string;
-  role: string;
-  logo?: string;
-  logo_alt?: string;
+const community = await getEntry('site', 'community');
+
+if (!community || community.data.kind !== 'community') {
+  throw new Error('Missing site content: src/content/site/community.md');
 }
 
-const conferences = loadYaml<Conference[]>('conferences.yaml');
-const community = await getEntry('pages', 'community');
-
-if (!community) {
-  throw new Error('Missing content page: src/content/pages/community.md');
-}
-
+const assetBase = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const assetUrl = (path: string) => `${assetBase}${path.replace(/^\/+/, '')}`;
 ---
 
 <BaseLayout
@@ -34,8 +28,8 @@ if (!community) {
       {community.data.intro && <p>{community.data.intro}</p>}
       <img
         class="community-photo"
-        src="/about-me/community_picture.jpeg"
-        alt="PyData Berlin organizers on stage in front of the conference audience"
+        src={assetUrl(community.data.image)}
+        alt={community.data.imageAlt}
       />
       {community.data.metrics && (
         <div class="community-metrics">
@@ -63,7 +57,7 @@ if (!community) {
     <section class="section community-events">
       <h2>{community.data.eventsTitle ?? 'Events'}</h2>
       <div class="conf-list">
-        {conferences.map((conf) => (
+        {community.data.conferences.map((conf) => (
           <div class="conf-item">
             <div class="conf-main">
               <a href={conf.url} target="_blank" rel="noopener noreferrer">
@@ -72,7 +66,7 @@ if (!community) {
               <span class="conf-role">{conf.role}</span>
             </div>
             {conf.logo && (
-              <img class="conf-logo" src={conf.logo} alt={conf.logo_alt ?? `${conf.name} logo`} loading="lazy" />
+              <img class="conf-logo" src={assetUrl(conf.logo)} alt={conf.logoAlt ?? `${conf.name} logo`} loading="lazy" />
             )}
           </div>
         ))}
