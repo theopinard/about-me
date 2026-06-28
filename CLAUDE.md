@@ -5,14 +5,13 @@ See README.md for commands and content management instructions.
 ## Stack
 - **Framework**: Astro 4.x — do not upgrade to 5.x without checking sitemap compatibility
 - **CSS**: Plain CSS with custom properties — no Tailwind, no CSS-in-JS
-- **Content**: Astro Content Collections (`src/content/`) for blog/talks; YAML files (`src/data/`) for profile and conferences
+- **Content**: One Astro Content Collection (`src/content/site/`) with consolidated home, blog, talks, and community Markdown entries
 - **Deployment**: GitHub Actions → GitHub Pages at `https://theopinard.github.io/about-me/`
 
 ## Important Paths
 - `src/layouts/BaseLayout.astro` — shared HTML shell, nav, footer, SEO meta
 - `src/styles/global.css` — all styles, CSS custom properties (`--accent`, etc.)
 - `src/content/config.ts` — Zod schemas for Content Collections
-- `src/utils/loadData.ts` — YAML loader; must use `process.cwd()` not `import.meta.url` (compiled path differs from source)
 - `astro.config.mjs` — site URL and base path (required for correct GitHub Pages routing)
 - `.github/workflows/deploy.yml` — CI/CD pipeline
 

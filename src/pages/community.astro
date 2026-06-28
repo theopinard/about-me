@@ -1,35 +1,76 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { loadYaml } from '../utils/loadData';
+import { getEntry } from 'astro:content';
 
-interface Conference {
-  name: string;
-  url: string;
-  role: string;
+const community = await getEntry('site', 'community');
+
+if (!community || community.data.kind !== 'community') {
+  throw new Error('Missing site content: src/content/site/community.md');
 }
 
-const conferences = loadYaml<Conference[]>('conferences.yaml');
+const assetBase = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const assetUrl = (path: string) => `${assetBase}${path.replace(/^\/+/, '')}`;
 ---
 
 <BaseLayout
-  title="Community"
-  description="Community involvement by Theodore Meynard — meetup organisation and conferences in the data science community."
+  title={community.data.title}
+  description={community.data.description}
 >
   <div class="container">
     <div class="page-header">
-      <h1>Community</h1>
-      <p>Meetups and events I helped organize.</p>
+      <h1>{community.data.title}</h1>
+      {community.data.subtitle && <p>{community.data.subtitle}</p>}
     </div>
 
-    <div class="conf-list">
-      {conferences.map((conf) => (
-        <div class="conf-item">
-          <a href={conf.url} target="_blank" rel="noopener noreferrer">
-            {conf.name}
-          </a>
-          <span class="conf-role">{conf.role}</span>
+    <section class="community-overview" aria-label="Community involvement summary">
+      {community.data.intro && <p>{community.data.intro}</p>}
+      <img
+        class="community-photo"
+        src={assetUrl(community.data.image)}
+        alt={community.data.imageAlt}
+      />
+      {community.data.metrics && (
+        <div class="community-metrics">
+          {community.data.metrics.map((metric) => (
+            <div class="community-metric">
+              <strong>{metric.value}</strong>
+              <span>{metric.label}</span>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      )}
+    </section>
+
+    {community.data.sections && (
+      <section class="community-detail-grid" aria-label="Community work areas">
+        {community.data.sections.map((section) => (
+          <div class="community-detail">
+            <h2>{section.title}</h2>
+            <p>{section.body}</p>
+          </div>
+        ))}
+      </section>
+    )}
+
+    <section class="section community-events">
+      <h2>{community.data.eventsTitle ?? 'Events'}</h2>
+      <div class="conf-list">
+        {community.data.conferences.map((conf) => (
+          <div class="conf-item">
+            <div class="conf-main">
+              <a href={conf.url} target="_blank" rel="noopener noreferrer">
+                {conf.name}
+              </a>
+              <span class="conf-role">{conf.role}</span>
+            </div>
+            {conf.logo && (
+              <img class="conf-logo" src={assetUrl(conf.logo)} alt={conf.logoAlt ?? `${conf.name} logo`} loading="lazy" />
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
   </div>
 </BaseLayout>

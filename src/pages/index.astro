@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { loadYaml } from '../utils/loadData';
+import { getEntry } from 'astro:content';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const assetBase = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const assetUrl = (path: string) => `${assetBase}${path.replace(/^\/+/, '')}`;
 
 function inlineMarkdown(text: string): string {
   return text
@@ -14,50 +17,27 @@ function inlineMarkdown(text: string): string {
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
 }
 
-interface WorkEntry {
-  company: string;
-  url?: string;
-  role: string;
-  period: string;
-  country?: string;
-  description: string;
+const home = await getEntry('site', 'home');
+const blog = await getEntry('site', 'blog');
+const talksPage = await getEntry('site', 'talks');
+
+if (!home || home.data.kind !== 'home') {
+  throw new Error('Missing site content: src/content/site/home.md');
 }
 
-interface EducationEntry {
-  institution: string;
-  degree: string;
-  year: number;
-  country?: string;
-  note?: string;
+if (!blog || blog.data.kind !== 'blog') {
+  throw new Error('Missing site content: src/content/site/blog.md');
 }
 
-interface SkillGroups {
-  languages: string[];
-  frameworks: string[];
-  platforms: string[];
-  practices: string[];
+if (!talksPage || talksPage.data.kind !== 'talks') {
+  throw new Error('Missing site content: src/content/site/talks.md');
 }
 
-interface Profile {
-  name: string;
-  title: string;
-  location: string;
-  github: string;
-  linkedin: string;
-  keywords?: string;
-  expertise_tags?: string[];
-  bio: string;
-  work: WorkEntry[];
-  education: EducationEntry[];
-  skills: SkillGroups;
-}
-
-const profile = loadYaml<Profile>('profile.yaml');
+const profile = home.data;
 
 // Build-time validation: every [text](@ref) in profile text fields must be a known internal reference.
 // Valid forms: @blog:<slug>  |  @talks  |  @community
-const blogPosts = await getCollection('blog');
-const validBlogIds = new Set(blogPosts.map((p) => p.id.replace(/(?:\.md)+$/, '')));
+const validBlogIds = new Set(blog.data.posts.map((post) => post.id));
 const VALID_PAGE_REFS = new Set(['@talks', '@community']);
 
 function assertInternalRefs(text: string, context: string): void {
@@ -66,13 +46,13 @@ function assertInternalRefs(text: string, context: string): void {
       const slug = ref.slice('@blog:'.length);
       if (!validBlogIds.has(slug)) {
         throw new Error(
-          `[profile.yaml] Unknown @blog slug "${slug}" in ${context}.\n` +
+          `[home.md] Unknown @blog slug "${slug}" in ${context}.\n` +
           `Valid slugs: ${[...validBlogIds].sort().join(', ')}`
         );
       }
     } else if (!VALID_PAGE_REFS.has(ref)) {
       throw new Error(
-        `[profile.yaml] Unknown internal reference "${ref}" in ${context}.\n` +
+        `[home.md] Unknown internal reference "${ref}" in ${context}.\n` +
         `Valid references: @blog:<slug>, ${[...VALID_PAGE_REFS].sort().join(', ')}`
       );
     }
@@ -80,16 +60,33 @@ function assertInternalRefs(text: string, context: string): void {
 }
 
 assertInternalRefs(profile.bio, 'bio');
+if (profile.community_summary) assertInternalRefs(profile.community_summary, 'community_summary');
 for (const job of profile.work) {
-  assertInternalRefs(job.description, `work › ${job.company} (${job.role})`);
+  if (job.description) assertInternalRefs(job.description, `work › ${job.company} (${job.role})`);
+  for (const highlight of job.highlights ?? []) {
+    assertInternalRefs(highlight, `work › ${job.company} (${job.role}) highlight`);
+  }
 }
 for (const edu of profile.education) {
   if (edu.note) assertInternalRefs(edu.note, `education › ${edu.institution}`);
 }
+
+const talksById = new Map(talksPage.data.talks.map((talk) => [talk.id, talk]));
+const selectedTalks = (profile.selected_talks ?? [])
+  .map((id) => {
+    const talk = talksById.get(id);
+    if (!talk) {
+      throw new Error(
+        `[home.md] Unknown selected talk "${id}".\n` +
+        `Valid talk ids: ${[...talksById.keys()].sort().join(', ')}`
+      );
+    }
+    return talk;
+  });
 ---
 
 <BaseLayout
-  title="About"
+  title={profile.title}
   description={`${profile.name} — ${profile.title} based in ${profile.location}.`}
   keywords={profile.keywords}
 >
@@ -101,8 +98,13 @@ for (const edu of profile.education) {
           <h1>{profile.name}</h1>
           <p class="subtitle">{profile.title} · {profile.location}</p>
           <p class="bio" set:html={inlineMarkdown(profile.bio)} />
+          {profile.expertise_tags && (
+            <div class="tag-list" aria-label="Areas of expertise">
+              {profile.expertise_tags.map((tag) => <span>{tag}</span>)}
+            </div>
+          )}
         </div>
-        <img class="hero-photo" src="/about-me/MeynardTheodore.jpg" alt="Photo of Theodore Meynard" />
+        <img class="hero-photo" src={assetUrl(profile.photo)} alt={profile.photoAlt} />
       </div>
       <div class="contact-strip">
         <a href={`https://github.com/${profile.github}`} target="_blank" rel="noopener">
@@ -131,12 +133,50 @@ for (const edu of profile.education) {
                   : job.company}
                 {job.country && <span class="location">{job.country}</span>}
               </p>
-              <p set:html={inlineMarkdown(job.description)} />
+              {job.description && <p set:html={inlineMarkdown(job.description)} />}
+              {job.highlights && (
+                <ul class="impact-list">
+                  {job.highlights.map((highlight) => <li set:html={inlineMarkdown(highlight)} />)}
+                </ul>
+              )}
             </div>
           </div>
         ))}
       </div>
     </section>
+
+    <!-- Selected Talks -->
+    {selectedTalks.length > 0 && (
+      <section class="section">
+        <div class="section-heading-row">
+          <h2>Selected Talks</h2>
+          <a href={`${base}/talks`}>All talks</a>
+        </div>
+        <div class="cards compact-cards">
+          {selectedTalks.map((talk) => (
+            <article class="card" id={talk.id}>
+              <h3><a href={`${base}/talks#${talk.id}`}>{talk.title}</a></h3>
+              <div class="meta">
+                <span>{talk.event}</span>
+                <span>{talk.year}</span>
+              </div>
+              {talk.description && <p>{talk.description}</p>}
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Community -->
+    {profile.community_summary && (
+      <section class="section">
+        <div class="section-heading-row">
+          <h2>Community</h2>
+          <a href={`${base}/community`}>Events</a>
+        </div>
+        <p class="section-copy" set:html={inlineMarkdown(profile.community_summary)} />
+      </section>
+    )}
 
     <!-- Education -->
     <section class="section">
@@ -157,30 +197,14 @@ for (const edu of profile.education) {
     <section class="section">
       <h2>Skills</h2>
       <div class="skills-grid">
-        <div class="skill-group">
-          <h3>Languages</h3>
-          <ul>
-            {profile.skills.languages.map((s) => <li set:html={inlineMarkdown(s)} />)}
-          </ul>
-        </div>
-        <div class="skill-group">
-          <h3>Frameworks</h3>
-          <ul>
-            {profile.skills.frameworks.map((s) => <li set:html={inlineMarkdown(s)} />)}
-          </ul>
-        </div>
-        <div class="skill-group">
-          <h3>Platforms</h3>
-          <ul>
-            {profile.skills.platforms.map((s) => <li set:html={inlineMarkdown(s)} />)}
-          </ul>
-        </div>
-        <div class="skill-group">
-          <h3>Practices</h3>
-          <ul>
-            {profile.skills.practices.map((s) => <li set:html={inlineMarkdown(s)} />)}
-          </ul>
-        </div>
+        {Object.entries(profile.skills).map(([group, skills]) => (
+          <div class="skill-group">
+            <h3>{group}</h3>
+            <ul>
+              {skills.map((s) => <li set:html={inlineMarkdown(s)} />)}
+            </ul>
+          </div>
+        ))}
       </div>
     </section>
   </div>

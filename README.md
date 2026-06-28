@@ -1,6 +1,6 @@
 # about-me
 
-Personal profile and blog site — [theopinard.github.io/about-me](https://theopinard.github.io/about-me/)
+Personal profile and blog site - [theopinard.github.io/about-me](https://theopinard.github.io/about-me/)
 
 Built with [Astro](https://astro.build), deployed via GitHub Actions to GitHub Pages.
 
@@ -17,58 +17,39 @@ npm run preview  # preview built site
 
 ---
 
-## Adding Content
+## Editing Content
 
-All content lives in files — no CMS, no database.
+Editable site content is centralized in `src/content/site/`:
 
-### New blog post
+- `home.md` - profile, bio, work history, education, skills, and selected talks
+- `blog.md` - all blog post metadata in the `posts` array
+- `talks.md` - all talk metadata in the `talks` array
+- `community.md` - community page copy, metrics, and conferences
 
-Create `src/content/blog/your-slug.md`:
+Stable page anchors come from each blog post or talk `id`, for example `/blog#2025-from-trees-to-transformers`.
 
-```markdown
----
-title: "Post title"
-summary: "A short description shown in the list."
-url: "https://link-to-external-post"
-date: 2024-06-01
-publisher: "Publisher name"
----
-```
+## Assets
 
-### New talk
+Public assets live under `public/assets/`:
 
-Create `src/content/talks/your-slug.md`:
+- `assets/profile/` - profile photo
+- `assets/community/` - community page photos
+- `assets/blog/` - blog thumbnails
+- `assets/logos/` - conference, event, and community logos
 
-```markdown
----
-title: "Talk title"
-event: "Conference Name"
-year: 2024
-description: "Short description of the talk."  # optional
-video: "https://..."      # optional
-slides: "https://..."     # optional
-schedule: "https://..."   # optional — link to the talk page in the conference schedule
----
-```
-
-### Profile (bio, work history, skills, education)
-
-Edit `src/data/profile.yaml`.
-
-### Conferences organised
-
-Edit `src/data/conferences.yaml` — add an entry:
+Store asset paths in content without the `/about-me` base path, for example:
 
 ```yaml
-- name: PyData Berlin 2025
-  url: "https://berlin.pydata.org"
-  role: Organiser
+image: assets/blog/plista.webp
+logo: assets/logos/europython-2023.webp
 ```
+
+Astro page code prepends `import.meta.env.BASE_URL`, so these paths work under GitHub Pages.
 
 ---
 
 ## Deployment
 
-Push to `main` → GitHub Actions builds and deploys automatically.
+Push to `main` -> GitHub Actions builds and deploys automatically.
 
-**One-time setup:** In GitHub repo settings → Pages → Source → **GitHub Actions**
+**One-time setup:** In GitHub repo settings -> Pages -> Source -> **GitHub Actions**
