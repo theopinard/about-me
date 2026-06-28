@@ -1,20 +1,29 @@
-- name: Pydata Berlin meetup (2020 - present)
+- name: PyData Berlin meetup (2020 - present)
   url: "https://www.meetup.com/pydata-berlin/"
-  role: Organiser
+  role: Organizer
+  logo: "/about-me/community/logos/pydata-berlin.webp"
+  logo_alt: "PyData Berlin meetup logo"
 
 - name: PyData Berlin 2025
   url: "https://pydata.org/berlin2025/"
-  role: Organiser (steering committee)
+  role: Organizer (steering committee)
+  logo: "/about-me/community/logos/pydata-berlin.webp"
+  logo_alt: "PyData Berlin 2025 logo"
 
 - name: PyConDE & PyData Berlin 2024
   url: "https://2024.pycon.de/"
-  role: Organiser (steering committee)
+  role: Organizer (steering committee)
+  logo: "/about-me/community/logos/pyconde-pydata.webp"
+  logo_alt: "PyConDE & PyData Berlin 2024 logo"
 
 - name: PyConDE & PyData Berlin 2023
   url: "https://2023.pycon.de/"
-  role: Organiser (steering committee)
+  role: Organizer (steering committee)
+  logo: "/about-me/community/logos/pyconde-pydata.webp"
+  logo_alt: "PyConDE & PyData Berlin 2023 logo"
 
 - name: PyConDE & PyData Berlin 2022
   url: "https://2022.pycon.de/"
-  role: Organiser (communication committee)
-
+  role: Organizer (communication committee)
+  logo: "/about-me/community/logos/pyconde-pydata.webp"
+  logo_alt: "PyConDE & PyData Berlin 2022 logo"

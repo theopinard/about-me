@@ -216,6 +216,24 @@ a:hover {
   line-height: 1.7;
 }
 
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.tag-list span {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  background: var(--surface-alt);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.3;
+  padding: 0.25rem 0.55rem;
+}
+
 .page-header {
   padding: 2.5rem 0 1.5rem;
   border-bottom: 1px solid var(--border);
@@ -274,6 +292,30 @@ a:hover {
   margin-bottom: 1.5rem;
 }
 
+.section-heading-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-heading-row h2 {
+  margin-bottom: 0;
+}
+
+.section-heading-row a {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.section-copy {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 680px;
+}
+
 /* ============================================================
    Timeline (Work History)
    ============================================================ */
@@ -329,6 +371,18 @@ a:hover {
   line-height: 1.6;
 }
 
+.impact-list {
+  margin-top: 0.65rem;
+  padding-left: 1.1rem;
+}
+
+.impact-list li {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 0.25rem;
+}
+
 /* ============================================================
    Skills
    ============================================================ */
@@ -365,6 +419,10 @@ a:hover {
 .cards {
   display: grid;
   gap: 1rem;
+}
+
+.compact-cards {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .card {
@@ -445,6 +503,159 @@ a:hover {
   text-decoration: none;
 }
 
+.blog-card {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.blog-card-body {
+  min-width: 0;
+}
+
+.blog-card-image-link {
+  display: block;
+  align-self: start;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--surface-alt);
+}
+
+.blog-card-image-link:hover {
+  text-decoration: none;
+}
+
+.blog-card-image {
+  width: 100%;
+  height: 100%;
+  min-height: 112px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+@media (max-width: 640px) {
+  .blog-card {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-card-image-link {
+    order: -1;
+  }
+
+  .blog-card-image {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.talk-card {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.talk-card-body {
+  min-width: 0;
+}
+
+.talk-logo {
+  width: 104px;
+  height: 64px;
+  justify-self: end;
+  object-fit: contain;
+}
+
+@media (max-width: 640px) {
+  .talk-card {
+    grid-template-columns: 1fr 72px;
+    gap: 0.85rem;
+  }
+
+  .talk-logo {
+    width: 64px;
+    height: 48px;
+  }
+}
+
+/* ============================================================
+   Community Page
+   ============================================================ */
+.community-overview {
+  padding: 0 0 2.5rem;
+}
+
+.community-overview > p {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 680px;
+  margin-bottom: 1.25rem;
+}
+
+.community-photo {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin: 0.25rem 0 1.25rem;
+}
+
+.community-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.community-metric {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.95rem 1rem;
+}
+
+.community-metric strong {
+  display: block;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.25;
+  margin-bottom: 0.25rem;
+}
+
+.community-metric span {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.community-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.community-detail h2 {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.community-detail p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.community-events {
+  padding-bottom: 0;
+}
+
 /* ============================================================
    Conferences List
    ============================================================ */
@@ -462,6 +673,14 @@ a:hover {
   background: var(--surface-alt);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+}
+
+.conf-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  min-width: 0;
 }
 
 .conf-item a {
@@ -486,11 +705,24 @@ a:hover {
   flex-shrink: 0;
 }
 
+.conf-logo {
+  width: 72px;
+  height: 48px;
+  object-fit: contain;
+  margin-left: 1rem;
+  flex-shrink: 0;
+}
+
 @media (max-width: 600px) {
   .conf-item {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 0.35rem;
+  }
+
+  .conf-logo {
+    width: 58px;
+    height: 42px;
+    margin-left: 0.75rem;
   }
 }
 

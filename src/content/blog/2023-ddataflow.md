@@ -5,6 +5,8 @@ url: "https://www.getyourguide.careers/posts/ddataflow-a-tool-for-data-end-to-en
 date: 2023-12-07
 publisher: "GetYourGuide Tech Blog"
 category: "Data Engineering"
+image: "/about-me/blog/ddataflow.webp"
+imageAlt: "GetYourGuide tech blog image for the DDataflow article"
 tags:
   - "Testing"
   - "ML Pipeline"

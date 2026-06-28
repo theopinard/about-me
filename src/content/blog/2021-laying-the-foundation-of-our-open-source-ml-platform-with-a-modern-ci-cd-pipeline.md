@@ -5,6 +5,9 @@ url: "https://www.getyourguide.careers/posts/laying-the-foundation-of-our-open-s
 date: 2021-05-15
 publisher: "GetYourGuide Tech Blog"
 category: "MLOps"
+image: "/about-me/blog/ml-platform-cicd.webp"
+imageAlt: "GetYourGuide tech blog image for the ML platform CI/CD article"
+imagePosition: "left center"
 tags:
   - "CI/CD/CT"
   - "MLOps"

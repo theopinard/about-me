@@ -5,6 +5,8 @@ url: "https://www.getyourguide.careers/posts/how-we-extended-our-open-source-ml-
 date: 2022-01-05
 publisher: "GetYourGuide Tech Blog"
 category: "Machine Learning"
+image: "/about-me/blog/real-time-inference.webp"
+imageAlt: "GetYourGuide tech blog image for the real-time inference article"
 tags:
   - "Real-Time Inference"
   - "Model Serving"

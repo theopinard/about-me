@@ -5,6 +5,8 @@ url: "https://web.archive.org/web/20230328160222/https://blog.plista.com/trackin
 date: 2019-08-21
 publisher: "plista (part of WPP)"
 category: "Ad Tech"
+image: "/about-me/blog/plista.webp"
+imageAlt: "Portrait from the plista blog article"
 tags:
   - "Ad Tech"
   - "Privacy"
