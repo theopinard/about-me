@@ -1,0 +1,33 @@
+# Theodore Meynard
+
+Theodore Meynard is a Berlin-based machine learning leader specializing in ranking, search relevance, recommendations, marketplace optimization, experimentation, MLOps, and ML platform engineering.
+
+He leads Ranking & Search Relevance at GetYourGuide. His public work covers large-scale marketplace ranking, learning-to-rank, deep learning ranking models, real-time inference, ML platforms, CI/CD for machine learning, data testing, data science management, and PyData community organization.
+
+## Canonical Pages
+
+- Profile: https://theopinard.github.io/about-me/
+- Blog: https://theopinard.github.io/about-me/blog/
+- Talks: https://theopinard.github.io/about-me/talks/
+- Community: https://theopinard.github.io/about-me/community/
+
+## Selected Articles
+
+- From trees to transformers: adopting deep learning for activity ranking: https://theopinard.github.io/about-me/blog/2025-from-trees-to-transformers/
+- From Batch to Real-time: The Incremental MLOps Journey at GetYourGuide: https://theopinard.github.io/about-me/blog/2023-from-batch-to-real-time-the-incremental-mlops-journey-at-getyourguide/
+- DDataflow: An Open-Source Tool for End-to-End Tests of Machine Learning Pipelines: https://theopinard.github.io/about-me/blog/2023-ddataflow/
+- How We Extended Our Open Source ML Platform to Support Real-Time Inference: https://theopinard.github.io/about-me/blog/2022-how-we-extended-our-open-source-ml-platform-to-support-real-time-inference/
+- Laying the Foundation of Our Open Source ML Platform with a Modern CI/CD Pipeline: https://theopinard.github.io/about-me/blog/2021-laying-the-foundation-of-our-open-source-ml-platform-with-a-modern-ci-cd-pipeline/
+
+## Selected Talks
+
+- Solving Marketplace Cold Start at Scale with Ranking: https://theopinard.github.io/about-me/talks/2026-cold-start-problem-in-marketplace/
+- From Trees To Transformers: Adopting Deep Learning for Ranking: https://theopinard.github.io/about-me/talks/2025-deep-learning-for-ranking-europython/
+- Switching from Data Scientist to Manager: https://theopinard.github.io/about-me/talks/2025-switching-ds-to-manager-pyconde/
+- Data Unit Tests: https://theopinard.github.io/about-me/talks/2023-data-unit-tests-europython/
+- ML Platform Architecture: https://theopinard.github.io/about-me/talks/2021-ml-platform-data-ai-summit/
+
+## External Profiles
+
+- GitHub: https://github.com/theopinard
+- LinkedIn: https://www.linkedin.com/in/theodore-meynard

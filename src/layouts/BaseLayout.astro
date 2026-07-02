@@ -1,11 +1,16 @@
 ---
 import '../styles/global.css';
+import { assetUrl, siteName } from '../lib/seo';
 
 export interface Props {
   title: string;
   description?: string;
   keywords?: string;
   canonicalURL?: string;
+  image?: string;
+  imageAlt?: string;
+  ogType?: string;
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const {
@@ -13,11 +18,22 @@ const {
   description = 'Theodore Meynard — Machine learning leader specializing in ranking, search, marketplace optimization, recommendations, experimentation, and MLOps.',
   keywords,
   canonicalURL = Astro.url.href,
+  image = 'assets/profile/theodore-meynard.jpg',
+  imageAlt = 'Photo of Theodore Meynard',
+  ogType = 'website',
+  jsonLd,
 } = Astro.props;
 
-const siteName = 'Theodore Meynard';
 // Normalize: strip trailing slash so we can always write `${base}/path`
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const normalizedCanonicalURL = canonicalURL.endsWith('/') ? canonicalURL : `${canonicalURL}/`;
+const socialImage = image.startsWith('http') ? image : assetUrl(image);
+const jsonLdGraph = jsonLd
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': Array.isArray(jsonLd) ? jsonLd : [jsonLd],
+    }).replace(/<\/script/gi, '<\\/script')
+  : undefined;
 
 const navLinks = [
   { href: `${base}/`, label: 'About' },
@@ -39,24 +55,28 @@ const currentPath = Astro.url.pathname;
     <title>{title} · {siteName}</title>
     <meta name="description" content={description} />
     {keywords && <meta name="keywords" content={keywords} />}
-    <link rel="canonical" href={canonicalURL} />
+    <link rel="canonical" href={normalizedCanonicalURL} />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={normalizedCanonicalURL} />
     <meta property="og:title" content={`${title} · ${siteName}`} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:site_name" content={siteName} />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={`${title} · ${siteName}`} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <link rel="sitemap" href={`${base}/sitemap-index.xml`} />
 
-
+    {jsonLdGraph && <script type="application/ld+json" set:html={jsonLdGraph} />}
   </head>
   <body>
     <header>
