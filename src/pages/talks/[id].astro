@@ -1,0 +1,129 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { assetUrl, breadcrumbJsonLd, joinKeywords, localPath, personJsonLd, siteUrl } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  const talksPage = await getEntry('site', 'talks');
+
+  if (!talksPage || talksPage.data.kind !== 'talks') {
+    throw new Error('Missing site content: src/content/site/talks.md');
+  }
+
+  return talksPage.data.talks.map((talk) => ({
+    params: { id: talk.id },
+    props: { talk },
+  }));
+}
+
+const { talk } = Astro.props;
+const home = await getEntry('site', 'home');
+
+if (!home || home.data.kind !== 'home') {
+  throw new Error('Missing site content: src/content/site/home.md');
+}
+
+const pageUrl = siteUrl(`/talks/${talk.id}`);
+const pageImage = talk.logo ?? home.data.photo;
+const topics = [
+  talk.event,
+  String(talk.year),
+  ...talk.title.split(/[:\-]/).map((part) => part.trim()).filter(Boolean),
+  'machine learning',
+  'data science',
+];
+const keywords = joinKeywords([...new Set(topics)]);
+
+const creativeWorkJsonLd = {
+  '@type': 'CreativeWork',
+  '@id': `${pageUrl}#talk`,
+  name: talk.title,
+  headline: talk.title,
+  description: talk.description,
+  creator: { '@id': `${siteUrl()}#theodore-meynard` },
+  datePublished: String(talk.year),
+  about: keywords,
+  image: assetUrl(pageImage),
+  isPartOf: {
+    '@type': 'CreativeWork',
+    name: talk.event,
+  },
+  mainEntityOfPage: pageUrl,
+  sameAs: [talk.video, talk.slides, talk.schedule, talk.repo].filter(Boolean),
+};
+
+const videoJsonLd = talk.video
+  ? {
+      '@type': 'VideoObject',
+      '@id': `${pageUrl}#video`,
+      name: talk.title,
+      description: talk.description,
+      thumbnailUrl: assetUrl(pageImage),
+      uploadDate: `${talk.year}-01-01`,
+      contentUrl: talk.video,
+      creator: { '@id': `${siteUrl()}#theodore-meynard` },
+    }
+  : undefined;
+---
+
+<BaseLayout
+  title={talk.title}
+  description={talk.description ?? `${talk.title}, a conference talk by Theodore Meynard at ${talk.event}.`}
+  keywords={keywords}
+  canonicalURL={pageUrl}
+  image={pageImage}
+  imageAlt={talk.logoAlt ?? home.data.photoAlt}
+  jsonLd={[
+    personJsonLd(home.data),
+    creativeWorkJsonLd,
+    ...(videoJsonLd ? [videoJsonLd] : []),
+    breadcrumbJsonLd([
+      { name: 'About', url: siteUrl() },
+      { name: 'Talks', url: siteUrl('/talks') },
+      { name: talk.title, url: pageUrl },
+    ]),
+  ]}
+>
+  <div class="container">
+    <article class="detail-page">
+      <nav class="back-link" aria-label="Breadcrumb">
+        <a href={localPath('/talks')}>Talks</a>
+      </nav>
+
+      <header class="detail-header">
+        <p class="detail-kicker">{talk.event} · {talk.year}</p>
+        <h1>{talk.title}</h1>
+        <div class="tag-list compact-tag-list" aria-label="Talk topics">
+          {topics.slice(0, 8).map((topic) => <span>{topic}</span>)}
+        </div>
+      </header>
+
+      {talk.logo && (
+        <img class="detail-logo" src={assetUrl(talk.logo)} alt={talk.logoAlt ?? `${talk.event} logo`} />
+      )}
+
+      {talk.description && (
+        <section class="detail-section">
+          <h2>Summary</h2>
+          <p>{talk.description}</p>
+        </section>
+      )}
+
+      <section class="detail-section">
+        <h2>Theodore's Context</h2>
+        <p>
+          This talk is part of Theodore Meynard's public speaking on machine learning,
+          MLOps, ranking systems, data science leadership, and the PyData community.
+          The page collects the available public materials for the session.
+        </p>
+      </section>
+
+      <div class="detail-actions">
+        {talk.video && <a class="button-link" href={talk.video} target="_blank" rel="noopener noreferrer">Watch video</a>}
+        {talk.slides && <a class="button-link" href={talk.slides} target="_blank" rel="noopener noreferrer">View slides</a>}
+        {talk.schedule && <a class="button-link" href={talk.schedule} target="_blank" rel="noopener noreferrer">Event schedule</a>}
+        {talk.repo && <a class="button-link" href={talk.repo} target="_blank" rel="noopener noreferrer">Repository</a>}
+      </div>
+    </article>
+  </div>
+</BaseLayout>

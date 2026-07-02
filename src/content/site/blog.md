@@ -6,7 +6,7 @@ subtitle: Writing on machine learning, engineering, and data science.
 posts:
   - id: 2019-knowledge-graph
     title: "Tracking 2.0: Tackling Cookie fatigue with an Innovative Widget"
-    summary: "Interview about new innovative ad format"
+    summary: "Interview from plista about privacy-aware advertising and a new widget format designed to respond to cookie fatigue in ad tech. The piece reflects early product and machine learning work around recommendation surfaces, tracking constraints, and user engagement."
     url: "https://web.archive.org/web/20230328160222/https://blog.plista.com/tracking-2-0-tackling-cookie-fatigue-with-an-innovative-widget/"
     date: 2019-08-21
     publisher: "plista (part of WPP)"

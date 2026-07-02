@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEntry } from 'astro:content';
+import { breadcrumbJsonLd, personJsonLd, siteUrl } from '../lib/seo';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const assetBase = import.meta.env.BASE_URL.endsWith('/')
@@ -11,7 +12,7 @@ const assetUrl = (path: string) => `${assetBase}${path.replace(/^\/+/, '')}`;
 function inlineMarkdown(text: string): string {
   return text
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\[([^\]]+)\]\(@blog:([^)]+)\)/g, `<a href="${base}/blog#$2">$1</a>`)
+    .replace(/\[([^\]]+)\]\(@blog:([^)]+)\)/g, `<a href="${base}/blog/$2">$1</a>`)
     .replace(/\[([^\]]+)\]\(@community\)/g, `<a href="${base}/community">$1</a>`)
     .replace(/\[([^\]]+)\]\(@talks\)/g, `<a href="${base}/talks">$1</a>`)
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
@@ -83,12 +84,43 @@ const selectedTalks = (profile.selected_talks ?? [])
     }
     return talk;
   });
+
+const profilePageUrl = siteUrl();
+const personEntity = personJsonLd(profile);
+const jsonLd = [
+  personEntity,
+  {
+    '@type': 'ProfilePage',
+    '@id': `${profilePageUrl}#profile-page`,
+    url: profilePageUrl,
+    name: `${profile.name} - Machine Learning Leader`,
+    description: `${profile.name} leads ranking and search relevance ML systems for marketplace optimization, experimentation, and MLOps.`,
+    mainEntity: { '@id': `${profilePageUrl}#theodore-meynard` },
+    hasPart: [
+      { '@type': 'WebPage', name: 'Blog', url: siteUrl('/blog') },
+      { '@type': 'WebPage', name: 'Talks', url: siteUrl('/talks') },
+      { '@type': 'WebPage', name: 'Community', url: siteUrl('/community') },
+    ],
+  },
+  {
+    '@type': 'WebSite',
+    '@id': `${profilePageUrl}#website`,
+    name: profile.name,
+    url: profilePageUrl,
+    description: 'Expert profile for Theodore Meynard covering ML leadership, ranking, search relevance, marketplace optimization, MLOps, speaking, and PyData community work.',
+  },
+  breadcrumbJsonLd([{ name: 'About', url: profilePageUrl }]),
+];
 ---
 
 <BaseLayout
   title={profile.title}
   description={`${profile.name} — ${profile.title} based in ${profile.location}.`}
   keywords={profile.keywords}
+  canonicalURL={profilePageUrl}
+  image={profile.photo}
+  imageAlt={profile.photoAlt}
+  jsonLd={jsonLd}
 >
   <div class="container">
     <!-- Hero -->
@@ -155,7 +187,7 @@ const selectedTalks = (profile.selected_talks ?? [])
         <div class="cards compact-cards">
           {selectedTalks.map((talk) => (
             <article class="card" id={talk.id}>
-              <h3><a href={`${base}/talks#${talk.id}`}>{talk.title}</a></h3>
+              <h3><a href={`${base}/talks/${talk.id}`}>{talk.title}</a></h3>
               <div class="meta">
                 <span>{talk.event}</span>
                 <span>{talk.year}</span>

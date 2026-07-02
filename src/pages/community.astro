@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEntry } from 'astro:content';
+import { assetUrl as absoluteAssetUrl, breadcrumbJsonLd, personJsonLd, siteUrl } from '../lib/seo';
 
 const community = await getEntry('site', 'community');
 
@@ -12,11 +13,53 @@ const assetBase = import.meta.env.BASE_URL.endsWith('/')
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
 const assetUrl = (path: string) => `${assetBase}${path.replace(/^\/+/, '')}`;
+const home = await getEntry('site', 'home');
+
+if (!home || home.data.kind !== 'home') {
+  throw new Error('Missing site content: src/content/site/home.md');
+}
+
+const pageUrl = siteUrl('/community');
+const jsonLd = [
+  personJsonLd(home.data),
+  {
+    '@type': 'AboutPage',
+    '@id': `${pageUrl}#page`,
+    url: pageUrl,
+    name: community.data.title,
+    description: community.data.description,
+    image: absoluteAssetUrl(community.data.image),
+    mainEntity: {
+      '@id': `${siteUrl()}#theodore-meynard`,
+    },
+    about: [
+      'PyData Berlin',
+      'Data science community organization',
+      'Machine learning community',
+      'Conference organization',
+      'Meetups',
+    ],
+    mentions: community.data.conferences.map((conf) => ({
+      '@type': 'Thing',
+      name: conf.name,
+      url: conf.url,
+      description: conf.role,
+    })),
+  },
+  breadcrumbJsonLd([
+    { name: 'About', url: siteUrl() },
+    { name: 'Community', url: pageUrl },
+  ]),
+];
 ---
 
 <BaseLayout
   title={community.data.title}
   description={community.data.description}
+  canonicalURL={pageUrl}
+  image={community.data.image}
+  imageAlt={community.data.imageAlt}
+  jsonLd={jsonLd}
 >
   <div class="container">
     <div class="page-header">

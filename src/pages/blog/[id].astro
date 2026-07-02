@@ -1,0 +1,133 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { assetUrl, breadcrumbJsonLd, joinKeywords, localPath, personJsonLd, siteUrl } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  const blog = await getEntry('site', 'blog');
+
+  if (!blog || blog.data.kind !== 'blog') {
+    throw new Error('Missing site content: src/content/site/blog.md');
+  }
+
+  return blog.data.posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const home = await getEntry('site', 'home');
+
+if (!home || home.data.kind !== 'home') {
+  throw new Error('Missing site content: src/content/site/home.md');
+}
+
+const authors = post.authors ?? ['Theodore Meynard'];
+const pageUrl = siteUrl(`/blog/${post.id}`);
+const pageImage = post.image ?? home.data.photo;
+const articleTopics = [...new Set([post.category, ...(post.tags ?? [])].filter(Boolean))];
+const keywords = joinKeywords([post.keywords, ...articleTopics]);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+const articleJsonLd = {
+  '@type': 'BlogPosting',
+  '@id': `${pageUrl}#article`,
+  headline: post.title,
+  description: post.summary,
+  datePublished: post.date.toISOString().slice(0, 10),
+  author: authors.map((name) =>
+    name === home.data.name
+      ? { '@id': `${siteUrl()}#theodore-meynard` }
+      : { '@type': 'Person', name }
+  ),
+  publisher: {
+    '@type': 'Organization',
+    name: post.publisher,
+  },
+  image: assetUrl(pageImage),
+  keywords,
+  mainEntityOfPage: pageUrl,
+  isBasedOn: post.url,
+  sameAs: post.url,
+};
+---
+
+<BaseLayout
+  title={post.title}
+  description={post.summary}
+  keywords={keywords}
+  canonicalURL={pageUrl}
+  image={pageImage}
+  imageAlt={post.imageAlt ?? home.data.photoAlt}
+  ogType="article"
+  jsonLd={[
+    personJsonLd(home.data),
+    articleJsonLd,
+    breadcrumbJsonLd([
+      { name: 'About', url: siteUrl() },
+      { name: 'Blog', url: siteUrl('/blog') },
+      { name: post.title, url: pageUrl },
+    ]),
+  ]}
+>
+  <div class="container">
+    <article class="detail-page">
+      <nav class="back-link" aria-label="Breadcrumb">
+        <a href={localPath('/blog')}>Blog</a>
+      </nav>
+
+      <header class="detail-header">
+        <p class="detail-kicker">{post.publisher}</p>
+        <h1>{post.title}</h1>
+        <div class="meta detail-meta">
+          <span>{formatDate(post.date)}</span>
+          {post.category && <span>{post.category}</span>}
+          <span>{authors.join(', ')}</span>
+        </div>
+        {articleTopics.length > 0 && (
+          <div class="tag-list compact-tag-list" aria-label="Article topics">
+            {articleTopics.map((tag) => <span>{tag}</span>)}
+          </div>
+        )}
+      </header>
+
+      {post.image && (
+        <img
+          class="detail-image"
+          src={assetUrl(post.image)}
+          alt={post.imageAlt ?? ''}
+          style={post.imagePosition ? `object-position: ${post.imagePosition}` : undefined}
+        />
+      )}
+
+      <section class="detail-section">
+        <h2>Summary</h2>
+        <p>{post.summary}</p>
+      </section>
+
+      <section class="detail-section">
+        <h2>Theodore's Context</h2>
+        <p>
+          This article is part of Theodore Meynard's public writing on machine learning,
+          ML platforms, ranking systems, experimentation, data engineering, and marketplace
+          optimization. The canonical article is hosted by {post.publisher}; this local page
+          provides discoverable context and points readers to the original source.
+        </p>
+      </section>
+
+      <div class="detail-actions">
+        <a class="button-link" href={post.url} target="_blank" rel="noopener noreferrer">
+          Read original article
+        </a>
+      </div>
+    </article>
+  </div>
+</BaseLayout>
