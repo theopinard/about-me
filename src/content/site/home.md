@@ -23,7 +23,7 @@ bio: >
   I am a **machine learning leader** with 8+ years of experience building ranking,
   recommendation, search relevance, and optimization systems for large-scale marketplaces.
   I currently lead Ranking & Search Relevance at GetYourGuide, where my team owns ML systems
-  influencing millions of travelers and around 75% of a €4B+ GMV marketplace. I am also
+  influencing millions of travelers across a significant majority of a €4B+ GMV marketplace. I am also
   active and recognized in the European PyData community as an [organizer](@community)
   and [conference speaker](@talks).
 community_summary: >
@@ -44,7 +44,7 @@ work:
     country: Germany
     highlights:
       - Lead a cross-functional ML team of 10+ people, including 6 direct reports across Data Science and MLOps; doubled the team size, hired 4 people, and promoted 3 team members to Senior.
-      - Own ranking and search relevance systems affecting millions of travelers and influencing around 75% of GetYourGuide's €4B+ GMV marketplace.
+      - Own ranking and search relevance systems affecting millions of travelers and influencing a significant majority of GetYourGuide's €4B+ GMV marketplace.
       - Led the evolution of ranking from static scoring to GBDT and state-of-the-art deep learning ranking architectures ([ranking journey](@blog:2023-from-batch-to-real-time-the-incremental-mlops-journey-at-getyourguide), [deep learning migration](@blog:2025-from-trees-to-transformers)).
       - Conceived and secured executive support for a multi-objective ranking strategy balancing short-term revenue, customer value, and long-term marketplace health.
       - Built operational and engineering practices that became a reference for other ML teams.
@@ -55,7 +55,7 @@ work:
     period: Aug 2020 – Feb 2023
     country: Germany
     highlights:
-      - Delivered around 2% global Net Revenue uplift through relevance modeling, ranking improvements, and dozens of online A/B experiments.
+      - Drove multiple percentage points of global Net Revenue uplift through relevance modeling, ranking improvements, and dozens of online A/B experiments.
       - Defined and executed the technical vision for ranking as an independent service, creating the foundation for a dedicated Ranking team.
       - Built the first internal ML platform adopted by 30+ practitioners across the ML department, standardizing batch and real-time inference with PySpark, Airflow, FastAPI, and MLflow ([platform foundations](@blog:2021-laying-the-foundation-of-our-open-source-ml-platform-with-a-modern-ci-cd-pipeline), [real-time inference](@blog:2022-how-we-extended-our-open-source-ml-platform-to-support-real-time-inference)).
   - company: plista (WPP)
