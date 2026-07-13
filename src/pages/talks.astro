@@ -51,7 +51,15 @@ const talks = [...talksPage.data.talks].sort((a, b) => b.year - a.year);
       {talks.map((talk) => (
         <article class="card talk-card" id={talk.id}>
           <div class="talk-card-body">
-            <h3><a href={localPath(`/talks/${talk.id}`)}>{talk.title}</a></h3>
+            <h3 class="card-title-row">
+              <a href={localPath(`/talks/${talk.id}`)}>{talk.title}</a>
+              <a class="permalink" href={`${localPath('/talks')}#${talk.id}`} aria-label={`Permalink to ${talk.title}`}>
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                </svg>
+              </a>
+            </h3>
             <div class="meta">
               <span>{talk.event}</span>
               <span>{talk.year}</span>

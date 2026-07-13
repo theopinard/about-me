@@ -471,6 +471,33 @@ a:hover {
   color: var(--accent);
 }
 
+.card-title-row {
+  align-items: baseline;
+  display: flex;
+  gap: 0.35rem;
+}
+
+.card-title-row > a:first-child {
+  min-width: 0;
+}
+
+.card-title-row .permalink {
+  align-items: center;
+  color: var(--text-muted);
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 1.4rem;
+  justify-content: center;
+  opacity: 0.45;
+  width: 1.4rem;
+}
+
+.card-title-row .permalink:hover,
+.card-title-row .permalink:focus-visible {
+  color: var(--accent);
+  opacity: 1;
+}
+
 .card .meta {
   font-size: 0.8rem;
   color: var(--text-muted);
