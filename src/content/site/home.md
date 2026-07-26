@@ -43,10 +43,11 @@ work:
     period: Feb 2023 – Present
     country: Germany
     highlights:
-      - Lead a cross-functional ML team of 10+ people, including 6 direct reports across Data Science and MLOps; doubled the team size, hired 4 people, and promoted 3 team members to Senior.
+      - Lead a cross-functional ML team of 10+ people, including 6 direct reports across Data Science and MLOps; doubled the team size, hired 4 people, and promoted 4 team members to Senior.
       - Own ranking and search relevance systems affecting millions of travelers and influencing a significant majority of GetYourGuide's €4B+ GMV marketplace.
       - Led the evolution of ranking from static scoring to GBDT and state-of-the-art deep learning ranking architectures ([ranking journey](@blog:2023-from-batch-to-real-time-the-incremental-mlops-journey-at-getyourguide), [deep learning migration](@blog:2025-from-trees-to-transformers)).
       - Conceived and secured executive support for a multi-objective ranking strategy balancing short-term revenue, customer value, and long-term marketplace health.
+      - Created and now lead a cross-functional Search Relevance virtual team focused on hybrid retrieval, personalized query suggestions, and LLM-based query understanding.
       - Built operational and engineering practices that became a reference for other ML teams.
       - Led a Claude-powered ML system health and observability initiative adopted across the ML department.
   - company: GetYourGuide
