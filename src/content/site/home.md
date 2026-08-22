@@ -76,21 +76,6 @@ work:
     highlights:
       - First and sole data scientist at an early-stage startup.
       - Built data quality and fraud detection systems for marketing campaigns and improved campaign ROI through postcode-level targeting analysis.
-  - company: Airbus Defence and Space
-    role: Final-Year Engineering Intern — CIMEX Hardware Adaptation
-    period: Jan 2017 – Jul 2017
-    country: Germany
-    highlights:
-      - Assessed how CIMEX, an ESA microgravity experiment studying heat and mass transfer at liquid interfaces, could be adapted from its planned ISS deployment to an alternative uncrewed spacecraft.
-      - Translated scientific objectives into technical requirements and investigated the hardware modifications needed for the alternative launch platform.
-      - Consulted specialists to define a viable solution within cost and schedule constraints.
-  - company: Airbus Defence and Space
-    role: Engineering Intern — CIMEX Integration & Testing
-    period: Feb 2015 – Jul 2015
-    country: Germany
-    highlights:
-      - Integrated, tested, and improved the CIMEX engineering model with an international engineering team during its final integration phase.
-      - Gathered technical findings from the engineering model to inform the future development of the flight model intended for the Fluid Science Laboratory aboard the International Space Station.
 education:
   - institution: University of São Paulo
     degree: Engineer's Degree — Aeronautics Engineering (Double Degree)
@@ -103,6 +88,18 @@ education:
     year: 2017
     country: France
     note: French Grande École engineering programme (2012-2017) with strong foundation in applied mathematics, statistical modeling, optimization, and computational physics. Teaching assistant in mathematics for first-year students.
+  - institution: Airbus Defence and Space
+    degree: Final-Year Internship — CIMEX Hardware Adaptation
+    year: 2017
+    country: Germany
+    note: >
+      Six-month internship assessing how CIMEX, an ESA microgravity experiment studying heat and mass transfer at liquid interfaces, could be adapted from its planned ISS deployment to an alternative uncrewed spacecraft. Translated scientific objectives into technical requirements, investigated the necessary hardware modifications, and consulted specialists to define a viable solution within cost and schedule constraints.
+  - institution: Airbus Defence and Space
+    degree: Engineering Internship — CIMEX Integration & Testing
+    year: 2015
+    country: Germany
+    note: >
+      Six-month internship integrating, testing, and improving the CIMEX engineering model with an international engineering team during its final integration phase. Gathered technical findings from the engineering model to inform the future development of the flight model intended for the Fluid Science Laboratory aboard the International Space Station.
   - institution: Cornell University
     degree: Research Internship — Fluid Dynamics & Computational Modelling
     year: 2014
