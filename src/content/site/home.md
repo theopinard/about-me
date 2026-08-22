@@ -76,6 +76,21 @@ work:
     highlights:
       - First and sole data scientist at an early-stage startup.
       - Built data quality and fraud detection systems for marketing campaigns and improved campaign ROI through postcode-level targeting analysis.
+  - company: Airbus Defence and Space
+    role: Final-Year Engineering Intern — CIMEX Hardware Adaptation
+    period: Jan 2017 – Jul 2017
+    country: Germany
+    highlights:
+      - Assessed how CIMEX, an ESA microgravity experiment studying heat and mass transfer at liquid interfaces, could be adapted from its planned ISS deployment to an alternative uncrewed spacecraft.
+      - Translated scientific objectives into technical requirements and investigated the hardware modifications needed for the alternative launch platform.
+      - Consulted specialists to define a viable solution within cost and schedule constraints.
+  - company: Airbus Defence and Space
+    role: Engineering Intern — CIMEX Integration & Testing
+    period: Feb 2015 – Jul 2015
+    country: Germany
+    highlights:
+      - Integrated, tested, and improved the CIMEX engineering model with an international engineering team during its final integration phase.
+      - Gathered technical findings from the engineering model to inform the future development of the flight model intended for the Fluid Science Laboratory aboard the International Space Station.
 education:
   - institution: University of São Paulo
     degree: Engineer's Degree — Aeronautics Engineering (Double Degree)
