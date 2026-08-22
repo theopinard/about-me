@@ -77,6 +77,12 @@ work:
       - First and sole data scientist at an early-stage startup.
       - Built data quality and fraud detection systems for marketing campaigns and improved campaign ROI through postcode-level targeting analysis.
 education:
+  - institution: Airbus Defence and Space
+    degree: Final-Year Internship — CIMEX Hardware Adaptation
+    year: 2017
+    country: Germany
+    note: >
+      Six-month internship assessing how [CIMEX](https://www.belspo.be/belspo/Fedra/proj.asp?COD=PX%2F8%2FLP%2F07), an ESA microgravity experiment studying heat and mass transfer at liquid interfaces, could be adapted to an alternative uncrewed spacecraft after [its planned ISS deployment was discontinued](https://publications.spaceops.org/2025/download_by_id.php?id=0502). Translated scientific objectives into technical requirements, investigated the necessary hardware modifications, and consulted specialists to define a viable solution within cost and schedule constraints.
   - institution: University of São Paulo
     degree: Engineer's Degree — Aeronautics Engineering (Double Degree)
     year: 2017
@@ -88,6 +94,12 @@ education:
     year: 2017
     country: France
     note: French Grande École engineering programme (2012-2017) with strong foundation in applied mathematics, statistical modeling, optimization, and computational physics. Teaching assistant in mathematics for first-year students.
+  - institution: Airbus Defence and Space
+    degree: Engineering Internship — CIMEX Integration & Testing
+    year: 2015
+    country: Germany
+    note: >
+      Six-month internship integrating, testing, and improving the [CIMEX](https://www.belspo.be/belspo/Fedra/proj.asp?COD=PX%2F8%2FLP%2F07) engineering model with an international engineering team during its final integration phase. Gathered technical findings from the engineering model to inform the future development of the flight model intended for the [Fluid Science Laboratory](https://www.esa.int/Science_Exploration/Human_and_Robotic_Exploration/Columbus/Fluid_Science_Laboratory) aboard the International Space Station.
   - institution: Cornell University
     degree: Research Internship — Fluid Dynamics & Computational Modelling
     year: 2014
