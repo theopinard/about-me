@@ -106,4 +106,23 @@ posts:
     publisher: "GetYourGuide Tech Blog"
     image: assets/blog/deep-learning-ranking.webp
     imageAlt: "GetYourGuide tech blog image for the deep learning ranking article"
+  - id: 2026-breaking-the-cold-start-trap
+    title: "Breaking the “cold start trap”: Three years of activating new activities at GetYourGuide"
+    date: 2026-11-18
+    authors:
+      - "Adewale Adebayo"
+      - "Hsin-Ting Hsieh"
+      - "Theodore Meynard"
+    category: "Machine Learning"
+    tags:
+      - "Cold Start"
+      - "Ranking"
+      - "Experimentation"
+      - "Marketplace"
+    keywords: "cold start problem, activity ranking, supplier activation, experimentation, marketplace growth"
+    summary: "Explores three years of experiments to help unactivated activities earn their first bookings at GetYourGuide. Reframing cold start around supplier activation and long-term value led the team to replace queues and fixed exposure slots with a simpler ranking model and flexible boosting."
+    url: "https://www.getyourguide.careers/posts/breaking-the-cold-start-trap-three-years-of-activating-new-activities-at-getyourguide"
+    publisher: "GetYourGuide Tech Blog"
+    image: assets/blog/cold-start-activation.webp
+    imageAlt: "GetYourGuide tech blog image for the cold start and activity activation article"
 ---

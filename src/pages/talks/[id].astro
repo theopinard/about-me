@@ -99,7 +99,7 @@ const videoJsonLd = talk.video
       </header>
 
       {talk.logo && (
-        <img class="detail-logo" src={assetUrl(talk.logo)} alt={talk.logoAlt ?? `${talk.event} logo`} />
+        <img class="detail-logo" src={localPath(talk.logo)} alt={talk.logoAlt ?? `${talk.event} logo`} />
       )}
 
       {talk.description && (

@@ -102,7 +102,7 @@ const articleJsonLd = {
       {post.image && (
         <img
           class="detail-image"
-          src={assetUrl(post.image)}
+          src={localPath(post.image)}
           alt={post.imageAlt ?? ''}
           style={post.imagePosition ? `object-position: ${post.imagePosition}` : undefined}
         />
